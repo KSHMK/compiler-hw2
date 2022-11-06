@@ -1,0 +1,14 @@
+#define VAR         1
+#define STR         2
+#define INT         3
+#define REAL        4
+#define ADD         5
+#define SUB         6
+#define MUL         7
+#define DIV         8
+#define LPAREN      9
+#define RPAREN      10
+#define SUB_FUNC    11  
+#define COMMA       12
+#define ASSIGN      13
+#define ERR         255
