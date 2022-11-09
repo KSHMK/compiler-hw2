@@ -1,20 +1,23 @@
 #ifndef __PARSER_H__
 #define __PARSER_H__
 
-int input(void);
-int assign(void);
-int assignd(void);
-int exp_add(void);
-int exp_addd(void);
-int exp_mul(void);
-int exp_muld(void);
-int exp_unary(void);
-int factor_var(void);
-int factor_etc(void);
-int addop(void);
-int mulop(void);
+#include "data_set.h"
 
-int parser(void);
+AST* input(AST* in);
+AST* assign(AST* in);
+AST* assignd(AST* in);
+AST* exp_add(AST* in);
+AST* exp_addd(AST* in);
+AST* exp_mul(AST* in);
+AST* exp_muld(AST* in);
+AST* exp_unary(AST* in);
+AST* factor_var(AST* in);
+AST* factor_etc(AST* in);
+AST* addop(AST* in);
+AST* mulop(AST* in);
+AST* unaryop(AST* in);
+
+AST* parser(AST* in);
 void process_input(char* input_buffer);
 
 #endif

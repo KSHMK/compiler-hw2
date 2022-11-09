@@ -1,21 +1,20 @@
 #define TERM        0x00000000
-#define NEED_AST    0x00010000
-#define OPERATOR    0x00020000
 #define TOKEN_MASK  0x0000ffff
 #define DOLLOR      ( 0     | TERM )
-#define VAR         ( 1     | TERM | NEED_AST )
-#define STR         ( 2     | TERM | NEED_AST )
-#define INT         ( 3     | TERM | NEED_AST )
-#define REAL        ( 4     | TERM | NEED_AST )
-#define ADD         ( 5     | TERM | NEED_AST | OPERATOR )
-#define SUB         ( 6     | TERM | NEED_AST | OPERATOR )
-#define MUL         ( 7     | TERM | NEED_AST | OPERATOR )
-#define DIV         ( 8     | TERM | NEED_AST | OPERATOR )
+#define VAR         ( 1     | TERM )
+#define STR         ( 2     | TERM )
+#define INT         ( 3     | TERM )
+#define REAL        ( 4     | TERM )
+#define ADD         ( 5     | TERM )
+#define SUB         ( 6     | TERM )
+#define MUL         ( 7     | TERM )
+#define DIV         ( 8     | TERM )
 #define LPAREN      ( 9     | TERM )
 #define RPAREN      ( 10    | TERM )
-#define SUB_FUNC    ( 11    | TERM | NEED_AST | OPERATOR )
+#define SUB_FUNC    ( 11    | TERM )
 #define COMMA       ( 12    | TERM )
-#define ASSIGN      ( 13    | TERM | NEED_AST | OPERATOR )
+#define ASSIGN      ( 13    | TERM )
+#define UNARY       ( 14    | TERM )
 #define ERR         ( 255   | TERM )
 
 #define NON_TERM        0x10000000
