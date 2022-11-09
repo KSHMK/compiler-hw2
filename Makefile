@@ -1,6 +1,6 @@
 CC = gcc
 TARGET = parser_201820682.out
-OBJS = main.o lex.yy.o data_set.o utils.o
+OBJS = main.o lex.yy.o parser.o data_set.o utils.o
 
 all: $(TARGET)
 
