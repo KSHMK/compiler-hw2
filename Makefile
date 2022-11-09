@@ -1,18 +1,17 @@
 CC = gcc
 TARGET = parser_201820682.out
-OBJS = main.o lex.yy.o
+OBJS = main.o lex.yy.o data_set.o utils.o
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) -o $@ $^ -lfl
+	$(CC) -g -o $@ $^ -lfl
 
 .c.o:
-	$(CC) -c -o $@ $<
+	$(CC) -g -c -o $@ $<
 
-lex.yy.o:
+lex.yy.c:
 	flex lex.l
-	$(CC) -c -o lex.yy.o lex.yy.c 
 
 clean:
 	rm -f *.o
