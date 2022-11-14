@@ -41,7 +41,7 @@ TOKEN* tl_new(int type, char* text, int len, TOKEN* prev)
 void tl_free(TOKEN *token)
 {
     TOKEN* next;
-    while(token->next)
+    while(token)
     {
         next = token->next;
         free(token->text);
@@ -248,6 +248,7 @@ void vl_free(VAR_LIST* vl)
 {
     for(int i=0; i<vl->len; i++)
         ast_free_all(vl->data[i]);
+    free(vl);
 }
 
 void vl_print(VAR_LIST* vl)

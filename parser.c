@@ -392,6 +392,7 @@ TOKEN* lexing_input(char* input_buffer)
         {
             printf("lexical error(%d): %s%s\n", line_loc-token_prev->len, token_prev->text, yytext);
             tl_free(token_root);
+            yy_delete_buffer(lex_string_buffer);
             return NULL;
         }
         if(tok == ERR)
@@ -401,6 +402,7 @@ TOKEN* lexing_input(char* input_buffer)
                 printf("%s", yytext);
             printf("\n");
             tl_free(token_root);
+            yy_delete_buffer(lex_string_buffer);
             return NULL;
         }
         token_new = tl_new(tok, yytext, yyleng, token_prev);

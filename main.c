@@ -8,6 +8,7 @@
 
 AST* ast_root = NULL;
 
+extern int yylex_destroy ( void );
 int run_input(char* input_buffer);
 
 int main(int argc, char* argv[])
@@ -33,6 +34,7 @@ int main(int argc, char* argv[])
             break;
     }
 
+    yylex_destroy();
     vl_free(var_list);
     return 0;
 }
