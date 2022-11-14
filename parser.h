@@ -17,7 +17,19 @@ AST* addop(AST* in);
 AST* mulop(AST* in);
 AST* unaryop(AST* in);
 
+AST* process_add(AST* ast);
+AST* process_sub(AST* ast);
+AST* process_mul(AST* ast);
+AST* process_div(AST* ast);
+AST* process_sub_func(AST* ast);
+AST* process_assign(AST* ast);
+AST* process_unary(AST* ast);
+AST* process_var(AST* ast);
+AST* process_ast(AST* ast);
+
 AST* parser(AST* in);
-void process_input(char* input_buffer);
+AST* parse_input(TOKEN* token_root);
+
+TOKEN* lexing_input(char* input_buffer);
 
 #endif

@@ -1,14 +1,15 @@
 CC = gcc
+CFLAGS = -g -Wall
 TARGET = parser_201820682.out
-OBJS = main.o lex.yy.o parser.o data_set.o utils.o
+OBJS = main.o lex.yy.o parser.o process.o data_set.o 
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) -g -o $@ $^ -lfl
+	$(CC) $(CFLAGS) -o $@ $^ -lfl
 
 .c.o:
-	$(CC) -g -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 lex.yy.c:
 	flex lex.l

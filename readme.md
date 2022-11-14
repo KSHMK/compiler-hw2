@@ -13,7 +13,7 @@ exp_add     : exp_add addop exp_mul
 exp_mul     : exp_mul mulop exp_unary
             | exp_unary
 
-exp_unary   : addop exp_unary
+exp_unary   : unaryop exp_unary
             | factor
 
 factor      : LPAREN assign RPAREN
@@ -26,6 +26,7 @@ factor      : LPAREN assign RPAREN
 
 addop       : ADD | SUB
 mulop       : MUL | DIV
+unaryop     : ADD | SUB
 ```
 
 ## CONVERT LEFT ASSO
@@ -34,7 +35,7 @@ mulop       : MUL | DIV
 input       : assign
 
 assign      : VAR assign'
-            | addop factor_var exp_mul' exp_add' 
+            | unary exp_unary exp_mul' exp_add' 
             | factor_etc exp_mul' exp_add' 
 
 assign'     : = assign 
@@ -49,7 +50,7 @@ exp_mul     : exp_unary exp_mul'
 exp_mul'    : mulop exp_unary exp_mul' 
             | ε
 
-exp_unary   : addop exp_unary 
+exp_unary   : unaryop exp_unary 
             | factor_var
 
 factor_var  : VAR 
@@ -66,6 +67,9 @@ addop       : ADD
 
 mulop       : MUL 
             | DIV
+
+unaryop     : ADD 
+            | SUB
 ```
 
 ## OPT
@@ -73,12 +77,13 @@ mulop       : MUL
 input       : assign
 
 assign      : VAR assign'
-            | addop factor_var exp_mul' exp_add' 
+            | unaryop exp_unary exp_mul' exp_add' 
             | factor_etc exp_mul' exp_add' 
 
 assign'     : = assign 
             | exp_mul' exp_add'
 
+exp_add     : exp_mul exp_add' 
 exp_add'    : addop exp_mul exp_add' 
             | ε
 
@@ -104,6 +109,9 @@ addop       : ADD
 
 mulop       : MUL 
             | DIV
+
+unaryop     : ADD 
+            | SUB
 ```
 
 # LEX

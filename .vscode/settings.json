@@ -6,6 +6,8 @@
         "vector": "c",
         "system_error": "c",
         "array": "c",
-        "data_set.h": "c"
+        "data_set.h": "c",
+        "parser.h": "c",
+        "stdio.h": "c"
     }
 }
