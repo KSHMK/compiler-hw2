@@ -401,24 +401,27 @@ _ASSIGN_END:
 AST* process_unary(AST* ast)
 {
     AST* data = NULL;
+    AST* out = NULL;
     PROC_AST_NODE(0, data, _UNARY_END);
     
     switch (data->type)
     {
     case INT:
-        data->data.i *= ast->data.i;
+        out = ast_clone(data);
+        out->data.i *= ast->data.i;
         break;
     case REAL:
-        data->data.r *= (double)ast->data.i;
+        out = ast_clone(data);
+        out->data.r *= (double)ast->data.i;
         break;
     default:
-        ast_free_all(data);
-        data = NULL;
         RUNTIME_ERR(_UNARY_END, "unary * %s 는 정의되지 않음", type_l[data->type & TOKEN_MASK]);
         break;
     }
 _UNARY_END:
-    return data;
+    if(data)
+        ast_free_all(data);
+    return out;
 }
 
 AST* process_var(AST* ast)

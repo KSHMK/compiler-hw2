@@ -188,6 +188,9 @@ void ast_print_node(AST* ast)
 
 void ast_print(AST* ast)
 {
+    if(!ast)
+        return;
+        
     ast_print_data(ast);
     printf("\n");
     ast_print_node(ast);      
