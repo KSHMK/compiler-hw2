@@ -24,6 +24,6 @@ real    [0-9]*\.[0-9]+
 sub\(       {return SUB_FUNC;}
 \,          {return COMMA;}
 \=          {return ASSIGN;}
-[ ]         {}
+[ ]         {return SPACE;}
 .           {return ERR;}
 %%

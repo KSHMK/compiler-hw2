@@ -118,7 +118,9 @@ AST* assignd(AST* in)
         PARSE_EPS(exp_muld, in);
         PARSE_EPS(exp_addd, ret);
     } else {
-        SYNTEX_ERR_PRNT("2");
+        SYNTEX_ERR_PRNT("%s 뒤에 잘못된 %s 출현", 
+                        type_l[in->type & TOKEN_MASK],
+                        type_l[tok & TOKEN_MASK]);
         return 0;
     }
     return ret;
@@ -376,7 +378,7 @@ AST* parser(AST* in)
 TOKEN* lexing_input(char* input_buffer)
 {
     int line_loc = 0;
-    int tok;
+    int tok, prev_tok;
     TOKEN *token_root, *token_prev, *token_new;
     void* lex_string_buffer = yy_scan_string(input_buffer);
     
@@ -386,7 +388,7 @@ TOKEN* lexing_input(char* input_buffer)
     yy_switch_to_buffer(lex_string_buffer);
     
     while((tok = yylex())){
-        if((token_prev->type & VALUE) && (tok & VALUE))
+        if((token_prev->type == prev_tok) && ((token_prev->type & VALUE) && (tok & VALUE)))
         {
             printf("lexical error(%d): %s%s\n", line_loc-token_prev->len, token_prev->text, yytext);
             tl_free(token_root);
@@ -402,6 +404,12 @@ TOKEN* lexing_input(char* input_buffer)
             tl_free(token_root);
             yy_delete_buffer(lex_string_buffer);
             return NULL;
+        }
+        prev_tok = tok;
+        if(tok == SPACE)
+        {
+            line_loc++;
+            continue;
         }
         token_new = tl_new(tok, yytext, yyleng, token_prev);
         line_loc += yyleng;

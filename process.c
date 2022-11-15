@@ -356,15 +356,15 @@ AST* process_sub_func(AST* ast)
     if(string->type != STR
     || num1->type != INT
     || num2->type != INT)
-        RUNTIME_ERR(_SUB_FUNC_END, "sub(string, int, int) 형식이 아닌 sub(%s, %s, %s)\n", 
+        RUNTIME_ERR(_SUB_FUNC_END, "sub(string, int, int) 형식이 아닌 sub(%s, %s, %s)", 
             type_l[string->type & TOKEN_MASK],
             type_l[num1->type & TOKEN_MASK],
             type_l[num2->type & TOKEN_MASK]);
 
     if((n1 = num1->data.i) < 0)
-        RUNTIME_ERR(_SUB_FUNC_END, "n1 값이 음수");
+        RUNTIME_ERR(_SUB_FUNC_END, "num1 값이 음수");
     if((n2 = num2->data.i) < 0)
-        RUNTIME_ERR(_SUB_FUNC_END, "n1 값이 음수");
+        RUNTIME_ERR(_SUB_FUNC_END, "num2 값이 음수");
     
     if(string->data_len < n1 + n2)
         RUNTIME_ERR(_SUB_FUNC_END, "string < num1 + num2");
