@@ -13,16 +13,16 @@ extern void yy_switch_to_buffer ( void* new_buffer  );
 extern void yy_delete_buffer ( void* b  );
 
 
-#define SKIP                                ((AST*)1)
-#define PARSE_IN_OUT(func, in, out)   if(!(out=(func)(in))){return 0;}
-#define PARSE_OUT(func, out)          PARSE_IN_OUT(func, in, out)
-#define PARSE_RET(func)               PARSE_OUT(func, ret)
-#define PARSE_EPS(func, inp)          {in = inp; PARSE_RET(func); if(ret == SKIP){ret = in;}}
-#define NEXT_TOKEN                          {cur_token = cur_token->next;}
-#define EXPECT(token)                 {if(!expect(token)){return 0;}}
-#define SYNTEX_ERR_PRNT(fmt, ...)           {printf("syntex error: "); \
-                                            printf(fmt, ##__VA_ARGS__); \
-                                            printf("\n");}
+#define SKIP                            ((AST*)1)
+#define PARSE_IN_OUT(func, in, out)     if(!(out=(func)(in))){return 0;}
+#define PARSE_OUT(func, out)            PARSE_IN_OUT(func, in, out)
+#define PARSE_RET(func)                 PARSE_OUT(func, ret)
+#define PARSE_EPS(func, inp)            {in = inp; PARSE_RET(func); if(ret == SKIP){ret = in;}}
+#define NEXT_TOKEN                      {cur_token = cur_token->next;}
+#define EXPECT(token)                   {if(!expect(token)){return 0;}}      
+#define SYNTEX_ERR_PRNT(fmt, ...)       {printf("syntex error: "); \
+                                        printf(fmt, ##__VA_ARGS__); \
+                                        printf("\n");}
 TOKEN* cur_token;
 
 int expect(int tok_check)
@@ -72,13 +72,11 @@ AST* assign(AST* in)
     if(tok == VAR){
         AST* var = ast_new(VAR, cur_token->text, cur_token->len);
         NEXT_TOKEN;
-        in = var;
-        PARSE_RET(assignd);
+        PARSE_EPS(assignd, var);
     } else if(tok == ADD || tok == SUB) {
         AST* unary;
         PARSE_OUT(unaryop, unary);
-        in = unary;
-        PARSE_RET(exp_unary);
+        PARSE_EPS(exp_unary, unary);
         ast_add_node(unary, 0, ret);
 
         PARSE_EPS(exp_muld, unary);
@@ -93,7 +91,7 @@ AST* assign(AST* in)
         PARSE_EPS(exp_addd, ret);
         
     } else {
-        SYNTEX_ERR_PRNT("1");
+        SYNTEX_ERR_PRNT("%s의 우항이 잘못됨", type_l[tok & TOKEN_MASK]);
         return 0;
     }
     return ret;
@@ -218,7 +216,7 @@ AST* exp_muld(AST* in)
         
         PARSE_EPS(exp_muld, muls);
     } else {
-        SYNTEX_ERR_PRNT("6");
+        SYNTEX_ERR_PRNT("%s의 우항이 잘못됨", type_l[in->type & TOKEN_MASK]);
         return 0;
     }
     return ret;
